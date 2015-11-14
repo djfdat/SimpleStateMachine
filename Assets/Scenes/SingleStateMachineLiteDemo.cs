@@ -9,7 +9,7 @@ public enum EDemoStates
 	State3
 }
 
-public class SingleStateMachineLiteDemo : MonoBehaviour, ISerializationCallbackReceiver
+public class SingleStateMachineLiteDemo : MonoBehaviour
 {
 	[SerializeField]
 	private SingleStateMachineLite<EDemoStates> Demo_SSML;
@@ -27,25 +27,6 @@ public class SingleStateMachineLiteDemo : MonoBehaviour, ISerializationCallbackR
 
 		// Uncomment the line below to allow events to refire when setting activeState to the same value
 		//Demo_SSML.bAllowStateReenter = true;
-	}
-
-	[SerializeField]
-	private EDemoStates __state;
-
-	public void OnBeforeSerialize() 
-	{
-		__state = Demo_SSML.ActiveState;
-	}
-
-	public void OnAfterDeserialize()
-	{
-		Demo_SSML = new SingleStateMachineLite<EDemoStates>();
-		Demo_SSML.OnStateEnter += Demo_SSML_OnStateEnter;
-		Demo_SSML.OnStateExit += Demo_SSML_OnStateExit;
-
-		Demo_SSML.ActiveState = __state;
-
-		Debug.Log(Demo_SSML.ActiveState.ToString());
 	}
 
 	#region Event Handlers
